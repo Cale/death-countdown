@@ -39,15 +39,12 @@ div {
   z-index: 2;
 }
 
-.digit, .second1-fall, .second2-fall, .minute1-fall, .minute2-fall {
+.digit, .second1-fall, .second2-fall, .minute1-fall, .minute2-fall, .hour1-fall, .hour2-fall {
   position: absolute;
   top: 21px;
 }
 
-.second1-fall, .second2-fall, .minute1-fall, .minute2-fall {
+.second1-fall, .second2-fall, .minute1-fall, .minute2-fall, .hour1-fall, .hour2-fall {
   font-size: 5rem;
   z-index: 0;
-}
-
-#second2, .second2-fall, #minute2, .minute2-fall {
 }

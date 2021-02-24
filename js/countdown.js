@@ -1,15 +1,17 @@
 $( document ).ready(function() {
 
+  var prevhour1 = 3;
+  var prevhour2 = 11;
+
   var prevminute1 = 6;
   var prevminute2 = 11;
 
   var prevsecond1 = 6;
   var prevsecond2 = 11;
-
-
+  
   function startCountdown() {
     //var secondsarr = [];
-    var deadline = new Date("Jan 5, 2035 15:37:25").getTime();
+    var deadline = new Date("Jan 4, 2035 22:13:05").getTime();
     var x = setInterval(function() {
       var now = new Date().getTime();
       var t = deadline - now;
@@ -19,8 +21,14 @@ $( document ).ready(function() {
       var seconds = Math.floor((t % (1000 * 60)) / 1000);
       var miliseconds = Math.floor((t % (((1000 * 60)) / 1000)) );
 
+      var hoursarr = hours.toString().split("");
       var minutesarr = minutes.toString().split("");
       var secondsarr = seconds.toString().split("");
+      
+      if (hoursarr[1] == undefined) {
+        hoursarr[1] = hoursarr[0];
+        hoursarr[0] = 0;
+      }
 
       if (minutesarr[1] == undefined) {
         minutesarr[1] = minutesarr[0];
@@ -31,8 +39,12 @@ $( document ).ready(function() {
         secondsarr[1] = secondsarr[0];
         secondsarr[0] = 0;
       }
+      
+      if ((hours == 23) && (minutes == 59) && (seconds == 59)) {
+        prevhour1 = 3;
+      }
 
-      if ((minutes == 59)) {
+      if ((minutes == 59) && (seconds == 59)) {
         prevminute1 = 6;
       }
 
@@ -40,24 +52,66 @@ $( document ).ready(function() {
         prevsecond1 = 6;
       }
 
-      var cursecond1 = Number(secondsarr[0]);
-      var cursecond2 = Number(secondsarr[1]);
+      var curhour1 = Number(hoursarr[0]);
+      var curhour2 = Number(hoursarr[1]);
       var curminute1 = Number(minutesarr[0]);
       var curminute2 = Number(minutesarr[1]);
+      var cursecond1 = Number(secondsarr[0]);
+      var cursecond2 = Number(secondsarr[1]);
+
+      if ((curhour2 == 3)  && (curhour1 == 2) && (minutes == 59) && (seconds == 59)) {
+        prevhour2 = 4
+      }
+
+      if ((curminute2 == 9) && (seconds == 59)) {
+        prevminute2 = 11
+      }
 
       if (cursecond2 == 9) {
         prevsecond2 = 11
       }
 
-      if (curminute2 == 9) {
-        prevminute = 11
+      console.log(hours+" "+Number(hoursarr[0])+" "+hoursarr[1]);
+      console.log("hour 1: "+Number(hoursarr[0]));
+      console.log("prev hour 1: "+prevhour1);
+      console.log("hour 2: "+Number(hoursarr[1]));
+      console.log("prev hour 2: "+prevhour2);
+      
+      // First hour digit
+      if (curhour1 < prevhour1) {
+        if (prevhour1 == 3) {
+          prevhour1 = 0;
+        }
+        $("#hour1-container").append('<div class="hour1-fall" style="color: red;">'+prevhour1+'</div>');
+        $(".hour1-fall").animate({
+          opacity: 0,
+          top: "+=400"
+        }, 2000, function() {
+          $(this).remove();
+        });
+        prevhour1 = curhour1;
+        $("#hour1").html(hoursarr[0]);
+      } else {
+        $("#hour1").html(hoursarr[0]);
       }
 
-      console.log(seconds+" "+Number(secondsarr[0])+" "+secondsarr[1]);
-      console.log("second 1: "+Number(secondsarr[0]));
-      console.log("prev second 1: "+prevsecond1);
-      console.log("second 2: "+Number(secondsarr[1]));
-      console.log("prev second 2: "+prevsecond2);
+      // Second hour digit
+      if (curhour2 < prevhour2) {
+        if (prevhour2 == 4) {
+          prevhour2 = 0;
+        }
+        $("#hour2-container").append('<div class="hour2-fall" style="color: orange;">'+prevhour2+'</div>');
+        $(".hour2-fall").animate({
+          opacity: 0,
+          top: "+=600"
+        }, 2000, function() {
+          $(this).remove();
+        });
+        prevhour2 = curhour2;
+        $("#hour2").html(hoursarr[1]);
+      } else {
+        $("#hour2").html(hoursarr[1]);
+      }
 
       // First minute digit
       if (curminute1 < prevminute1) {
