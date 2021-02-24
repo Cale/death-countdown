@@ -8,23 +8,26 @@ $( document ).ready(function() {
 
   var prevsecond1 = 6;
   var prevsecond2 = 11;
-  
+
   function startCountdown() {
     //var secondsarr = [];
     var deadline = new Date("Jan 4, 2035 22:13:05").getTime();
     var x = setInterval(function() {
       var now = new Date().getTime();
       var t = deadline - now;
-      var days = Math.floor(t / (1000 * 60 * 60 * 24));
+      var totaldays = Math.floor(t / (1000 * 60 * 60 * 24));
       var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60));
       var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((t % (1000 * 60)) / 1000);
       var miliseconds = Math.floor((t % (((1000 * 60)) / 1000)) );
+      var years = Math.floor(totaldays / 365);
+      var days = Math.floor(totaldays - (365 * years));
+      console.log(days);
 
       var hoursarr = hours.toString().split("");
       var minutesarr = minutes.toString().split("");
       var secondsarr = seconds.toString().split("");
-      
+
       if (hoursarr[1] == undefined) {
         hoursarr[1] = hoursarr[0];
         hoursarr[0] = 0;
@@ -39,7 +42,7 @@ $( document ).ready(function() {
         secondsarr[1] = secondsarr[0];
         secondsarr[0] = 0;
       }
-      
+
       if ((hours == 23) && (minutes == 59) && (seconds == 59)) {
         prevhour1 = 3;
       }
@@ -76,13 +79,19 @@ $( document ).ready(function() {
       console.log("prev hour 1: "+prevhour1);
       console.log("hour 2: "+Number(hoursarr[1]));
       console.log("prev hour 2: "+prevhour2);
-      
+
+      // Years digits
+      $("#years").html(years);
+
+      // Days digits
+      $("#days").html(days);
+
       // First hour digit
       if (curhour1 < prevhour1) {
         if (prevhour1 == 3) {
           prevhour1 = 0;
         }
-        $("#hour1-container").append('<div class="hour1-fall" style="color: red;">'+prevhour1+'</div>');
+        $("#hour1-container").append('<div class="hour1-fall fall" style="color: red;">'+prevhour1+'</div>');
         $(".hour1-fall").animate({
           opacity: 0,
           top: "+=400"
@@ -100,7 +109,7 @@ $( document ).ready(function() {
         if (prevhour2 == 4) {
           prevhour2 = 0;
         }
-        $("#hour2-container").append('<div class="hour2-fall" style="color: orange;">'+prevhour2+'</div>');
+        $("#hour2-container").append('<div class="hour2-fall fall" style="color: orange;">'+prevhour2+'</div>');
         $(".hour2-fall").animate({
           opacity: 0,
           top: "+=600"
@@ -118,7 +127,7 @@ $( document ).ready(function() {
         if (prevminute1 == 6) {
           prevminute1 = 0;
         }
-        $("#minute1-container").append('<div class="minute1-fall" style="color: red;">'+prevminute1+'</div>');
+        $("#minute1-container").append('<div class="minute1-fall fall" style="color: red;">'+prevminute1+'</div>');
         $(".minute1-fall").animate({
           opacity: 0,
           top: "+=400"
@@ -136,7 +145,7 @@ $( document ).ready(function() {
         if (prevminute2 == 11) {
           prevminute2 = 0;
         }
-        $("#minute2-container").append('<div class="minute2-fall" style="color: orange;">'+prevminute2+'</div>');
+        $("#minute2-container").append('<div class="minute2-fall fall" style="color: orange;">'+prevminute2+'</div>');
         $(".minute2-fall").animate({
           opacity: 0,
           top: "+=600"
@@ -154,7 +163,7 @@ $( document ).ready(function() {
         if (prevsecond1 == 6) {
           prevsecond1 = 0;
         }
-        $("#second1-container").append('<div class="second1-fall" style="color: red;">'+prevsecond1+'</div>');
+        $("#second1-container").append('<div class="second1-fall fall" style="color: red;">'+prevsecond1+'</div>');
         $(".second1-fall").animate({
           opacity: 0,
           top: "+=400"
@@ -172,7 +181,7 @@ $( document ).ready(function() {
         if (prevsecond2 == 11) {
           prevsecond2 = 0;
         }
-        $("#second2-container").append('<div class="second2-fall" style="color: orange;">'+prevsecond2+'</div>');
+        $("#second2-container").append('<div class="second2-fall fall" style="color: orange;">'+prevsecond2+'</div>');
         $(".second2-fall").animate({
           opacity: 0,
           top: "+=600"
@@ -185,35 +194,13 @@ $( document ).ready(function() {
         $("#second2").html(secondsarr[1]);
       }
 
-
-      document.getElementById("demo").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s " + miliseconds + "ms";
+      document.getElementById("demo").innerHTML = years + "y " + days + "d " + hours + "h " + minutes + "m " + seconds + "s " + miliseconds + "ms";
       if (t < 0) {
           clearInterval(x);
           document.getElementById("demo").innerHTML = "EXPIRED";
       }
     }, 1000);
-    // var today = new Date();
-    //
-    // var BigDay = new Date("December 25, 2065");
-    // var msPerDay = 24 * 60 * 60 * 1000;
-    // var timeLeft = (BigDay.getTime() - today.getTime());
-    // console.log(BigDay.getTime() + " "+ today.getTime());
-    // var all_daysLeft = timeLeft / msPerDay;
-    // console.log("all_daysleft: "+all_daysLeft);
-    // var all_daysLeft = Math.floor(all_daysLeft);
-    // console.log(all_daysLeft);
-    // var yearsLeft = 0;
-    // if (all_daysLeft > 365) {
-    //   yearsLeft = Math.floor(all_daysLeft / 365);
-    //   daysLeftthisyear = all_daysLeft % 365;
-    // }
-    // var e_hrsLeft = (all_daysLeft - daysLeftthisyear) % 24;
-    // console.log("all_daysleft: "+all_daysLeft);
-    // console.log("daysLeft this year: "+daysLeftthisyear);
-    // console.log(e_hrsLeft);
-    // var hrsLeft = Math.floor(e_hrsLeft);
-    // var minsLeft = Math.floor((e_hrsLeft - hrsLeft) * 60);
-    // $("div").append(yearsLeft + " years " + daysLeftthisyear + " days " + hrsLeft + " hours " + minsLeft + " minutes");
+
   }
 
 
