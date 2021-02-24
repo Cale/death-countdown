@@ -1,0 +1,53 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#demo {
+  text-align: center;
+}
+
+div {
+  border: 1px solid red;
+}
+
+.wrapper {
+  border: 1px solid blue;
+  margin: 0 auto;
+  width: 40rem;
+}
+
+#countdown {
+  font-size: 0;
+  margin-top: 20px;
+  margin-bottom: 300px;
+}
+
+.container {
+  display: inline-block;
+  width: 2.5rem;
+  height: 6rem;
+}
+
+.divider {
+  width: 2.7rem;
+}
+
+.digit {
+  font-size: 5rem;
+  z-index: 2;
+}
+
+.digit, .second1-fall, .second2-fall, .minute1-fall, .minute2-fall {
+  position: absolute;
+  top: 21px;
+}
+
+.second1-fall, .second2-fall, .minute1-fall, .minute2-fall {
+  font-size: 5rem;
+  z-index: 0;
+}
+
+#second2, .second2-fall, #minute2, .minute2-fall {
+}
