@@ -1,5 +1,9 @@
 $( document ).ready(function() {
 
+  var prevyear = 200;
+
+  var prevday = 400;
+
   var prevhour1 = 3;
   var prevhour2 = 11;
 
@@ -10,8 +14,7 @@ $( document ).ready(function() {
   var prevsecond2 = 11;
 
   function startCountdown() {
-    //var secondsarr = [];
-    var deadline = new Date("Jan 4, 2035 22:13:05").getTime();
+    var deadline = new Date("Feb 21, 2033 18:03:00").getTime();
     var x = setInterval(function() {
       var now = new Date().getTime();
       var t = deadline - now;
@@ -41,6 +44,10 @@ $( document ).ready(function() {
       if (secondsarr[1] == undefined) {
         secondsarr[1] = secondsarr[0];
         secondsarr[0] = 0;
+      }
+
+      if ((days == 364) && (hours == 23) && (minutes == 59) && (seconds == 59)) {
+        prevday = 400;
       }
 
       if ((hours == 23) && (minutes == 59) && (seconds == 59)) {
@@ -74,17 +81,36 @@ $( document ).ready(function() {
         prevsecond2 = 11
       }
 
-      console.log(hours+" "+Number(hoursarr[0])+" "+hoursarr[1]);
-      console.log("hour 1: "+Number(hoursarr[0]));
-      console.log("prev hour 1: "+prevhour1);
-      console.log("hour 2: "+Number(hoursarr[1]));
-      console.log("prev hour 2: "+prevhour2);
+      // console.log(hours+" "+Number(hoursarr[0])+" "+hoursarr[1]);
+      // console.log("hour 1: "+Number(hoursarr[0]));
+      // console.log("prev hour 1: "+prevhour1);
+      // console.log("hour 2: "+Number(hoursarr[1]));
+      // console.log("prev hour 2: "+prevhour2);
+      console.log("Previous year: "+prevyear);
+      console.log("Year: "+years);
+      console.log("Previous Day: "+prevday);
+      console.log("Days: "+days);
 
       // Years digits
       $("#years").html(years);
 
       // Days digits
-      $("#days").html(days);
+      if (days < prevday) {
+        if (prevday == 400) {
+          prevday = 365;
+        }
+        $("#day-container").append('<div class="day-fall fall" style="color: red;">'+prevday+'</div>');
+        $(".day-fall").animate({
+          opacity: 0,
+          top: "+=400"
+        }, 2000, function() {
+          $(this).remove();
+        });
+        prevday = days;
+        $("#days").html(days);
+      } else {
+        $("#days").html(days);
+      }
 
       // First hour digit
       if (curhour1 < prevhour1) {
