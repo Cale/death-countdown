@@ -14,7 +14,7 @@ $( document ).ready(function() {
   var prevsecond2 = 11;
 
   function startCountdown() {
-    var deadline = new Date("Feb 21, 2033 18:03:00").getTime();
+    var deadline = new Date("Feb 19, 2041 18:13:00").getTime();
     var x = setInterval(function() {
       var now = new Date().getTime();
       var t = deadline - now;
@@ -92,7 +92,22 @@ $( document ).ready(function() {
       console.log("Days: "+days);
 
       // Years digits
-      $("#years").html(years);
+      if (years < prevyear) {
+        if (prevyear == 200) {
+          prevyear = 0;
+        }
+        $("#year-container").append('<div class="year-fall fall" style="color: red;">'+prevyear+'</div>');
+        $(".year-fall").animate({
+          opacity: 0,
+          top: "+=400"
+        }, 2000, function() {
+          $(this).remove();
+        });
+        prevyear = years;
+        $("#years").html(years);
+      } else {
+        $("#years").html(years);
+      }
 
       // Days digits
       if (days < prevday) {
