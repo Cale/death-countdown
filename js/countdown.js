@@ -25,7 +25,6 @@ $( document ).ready(function() {
       var miliseconds = Math.floor((t % (((1000 * 60)) / 1000)) );
       var years = Math.floor(totaldays / 365);
       var days = Math.floor(totaldays - (365 * years));
-      console.log(days);
 
       var hoursarr = hours.toString().split("");
       var minutesarr = minutes.toString().split("");
@@ -80,16 +79,6 @@ $( document ).ready(function() {
       if (cursecond2 == 9) {
         prevsecond2 = 11
       }
-
-      // console.log(hours+" "+Number(hoursarr[0])+" "+hoursarr[1]);
-      // console.log("hour 1: "+Number(hoursarr[0]));
-      // console.log("prev hour 1: "+prevhour1);
-      // console.log("hour 2: "+Number(hoursarr[1]));
-      // console.log("prev hour 2: "+prevhour2);
-      console.log("Previous year: "+prevyear);
-      console.log("Year: "+years);
-      console.log("Previous Day: "+prevday);
-      console.log("Days: "+days);
 
       // Years digits
       if (years < prevyear) {
@@ -243,8 +232,6 @@ $( document ).ready(function() {
     }, 1000);
 
   }
-
-
 
   startCountdown();
 
