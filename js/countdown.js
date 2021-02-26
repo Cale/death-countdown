@@ -15,6 +15,8 @@ $( document ).ready(function() {
 
   var firstrun = true;
   const lifeexpectancy = 81;
+  const lifeexpectancyindays = 29585;
+  const minutesinaday = 1440;
   var age = 25;
   var deadline = new Date("Feb 19, 2041 15:14:00").getTime();
 
@@ -28,14 +30,47 @@ $( document ).ready(function() {
     });
   }
 
-  function removeDays() {
-    
+  function removeMinutesGone() {
+    var now = new Date().getTime();
+    var t = deadline - now;
+    var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60));
+    var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+
+    var minuteslefttoday = ((hours * 60) + minutes);
+    var minutesgonetoday = minutesinaday - minuteslefttoday;
+
+    var v = $("#grid > div");
+    var cur = 0;
+    for(var j, x, i = minutesgonetoday; i; j = parseInt(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
+      function removeMinute() {
+        v.eq(cur++).animate({
+          backgroundColor: "#ffffff"
+        }, 25);
+          if (cur != minutesgonetoday) {
+            setTimeout(removeMinute, 25)
+          }
+      }
+    removeMinute();
+  }
+
+  function removeminutes() {
+
+
+
+
+    // for (i = 0; i < minutesgonetoday; i++) {
+    //   setTimeout(function(){
+    //     console.log("timeout");
+    //     $(".box"+i.toString()).fadeTo(750, 0);
+    //   }, 1000);
+    // }
+
   }
 
   function startBlocks() {
     const container = document.getElementById("grid");
-    const rows = Math.round(29585 / 172);
-    const colors = Array("#090F14", "#112442", "#794bbf", "#4C4466", "#2846a8");
+    const rows = Math.floor(minutesinaday / 38);
+    const colors = Array("#112442", "#794bbf", "#4C4466", "#2846a8");
 
     function makeRows(rows, cols) {
       container.style.setProperty('--grid-rows', rows);
@@ -49,8 +84,9 @@ $( document ).ready(function() {
         //cell.innerText = (c + 1);
         container.appendChild(cell).className = "grid-item box"+box;
       };
-      $("#grid").fadeTo(2000, 1);
-      removeDays();
+      $("#grid").fadeTo(2000, 1, function(){
+        removeMinutesGone();
+      });
     };
 
     makeRows(rows, rows);
@@ -65,10 +101,10 @@ $( document ).ready(function() {
       var years = Math.floor(totaldays / 365);
       var days = Math.floor(totaldays - (365 * years));
 
-      var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-      var vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-
-      var squares = 16;
+      // var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+      // var vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+      //
+      // var squares = 16;
 
 
 
