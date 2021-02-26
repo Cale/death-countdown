@@ -17,8 +17,12 @@ $( document ).ready(function() {
   const lifeexpectancy = 81;
   const lifeexpectancyindays = 29585;
   const minutesinaday = 1440;
+  var minuteslefttoday;
+  var lastbox;
   var age = 25;
-  var deadline = new Date("Feb 19, 2041 15:14:00").getTime();
+  var deadline = new Date("Feb 19, 2041 22:11:00").getTime();
+
+  function donothing() {}
 
   function changeBGcolor(color) {
     $("body").animate({
@@ -30,13 +34,94 @@ $( document ).ready(function() {
     });
   }
 
+  // function throbBGcolor(elem) {
+  //   var x = setInterval(function() {
+  //
+  //     //throbBGcolor(".box"+c.toString());
+  //     // if (t < 0) {
+  //     //     clearInterval(x);
+  //     //     console.log("Minute done");
+  //     // }
+  //
+  //     console.log("throbbing");
+  //     $(elem).animate({
+  //       backgroundColor: "#ffffff"
+  //     }, 500, function() {
+  //       $(elem).animate({
+  //         backgroundColor: "#090F14"
+  //       }, 500);
+  //     });
+  //
+  //   }, 1000);
+  // }
+
+
+  function removeRemainingMinutes() {
+    setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+
+      $(".box"+lastbox.toString()).animate({
+        backgroundColor: "#0f0"
+      }, 500);
+      // setTimeout(donothing, 2000)
+      // if (c != 1369) {
+      //   setTimeout(removeMinute, 60000)
+      // } else {
+      //   console.log("done");
+      // }
+
+
+
+      lastbox++;                    //  increment the counter
+      if (lastbox < 1369) {           //  if the counter < 10, call the loop function
+        removeRemainingMinutes();             //  ..  again which will trigger another
+        console.log(lastbox);
+      } else {
+        console.log("done");
+      }
+    }, 60000)
+  }
+
+
+
+  // function removeRemainingMinutes(gone) {
+  //   console.log(minutesinaday);
+  //   console.log(gone)
+  //   console.log(minutesinaday - gone);
+  //   //var startingid = gone;
+  //
+  //   // var x = setInterval(function() {
+  //   //
+  //   //   //throbBGcolor(".box"+c.toString());
+  //   //   // if (t < 0) {
+  //   //   //     clearInterval(x);
+  //   //   //     console.log("Minute done");
+  //   //   // }
+  //   // }, 1000);
+  //
+  //   for (c = gone; c < 1369; c++) {
+  //     function removeMinute() {
+  //       $(".box"+c.toString()).animate({
+  //         backgroundColor: "#0f0"
+  //       }, 500);
+  //       setTimeout(donothing, 2000)
+  //       if (c != 1369) {
+  //         setTimeout(removeMinute, 60000)
+  //       } else {
+  //         console.log("done");
+  //       }
+  //     }
+  //     removeMinute();
+  //   }
+  //
+  // }
+
   function removeMinutesGone() {
     var now = new Date().getTime();
     var t = deadline - now;
     var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60));
     var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
 
-    var minuteslefttoday = ((hours * 60) + minutes);
+    minuteslefttoday = ((hours * 60) + minutes);
     var minutesgonetoday = minutesinaday - minuteslefttoday;
 
     var v = $("#grid > div");
@@ -48,23 +133,12 @@ $( document ).ready(function() {
         }, 25);
           if (cur != minutesgonetoday) {
             setTimeout(removeMinute, 25)
+          } else {
+            lastbox = cur;
+            removeRemainingMinutes();
           }
       }
     removeMinute();
-  }
-
-  function removeminutes() {
-
-
-
-
-    // for (i = 0; i < minutesgonetoday; i++) {
-    //   setTimeout(function(){
-    //     console.log("timeout");
-    //     $(".box"+i.toString()).fadeTo(750, 0);
-    //   }, 1000);
-    // }
-
   }
 
   function startBlocks() {
@@ -81,7 +155,6 @@ $( document ).ready(function() {
         let cell = document.createElement("div");
         let box = c.toString();
         cell.style.background = color;
-        //cell.innerText = (c + 1);
         container.appendChild(cell).className = "grid-item box"+box;
       };
       $("#grid").fadeTo(2000, 1, function(){
@@ -90,25 +163,6 @@ $( document ).ready(function() {
     };
 
     makeRows(rows, rows);
-
-    var x = setInterval(function() {
-      var now = new Date().getTime();
-      var t = deadline - now;
-      var totaldays = Math.floor(t / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60));
-      var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((t % (1000 * 60)) / 1000);
-      var years = Math.floor(totaldays / 365);
-      var days = Math.floor(totaldays - (365 * years));
-
-      // var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-      // var vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-      //
-      // var squares = 16;
-
-
-
-    });
   }
 
   function startCountdown() {
@@ -360,7 +414,7 @@ $( document ).ready(function() {
 
       firstrun = false;
 
-      //document.getElementById("demo").innerHTML = years + "y " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+      document.getElementById("demo").innerHTML = years + "y " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
       if (t < 0) {
           clearInterval(x);
           document.getElementById("demo").innerHTML = "EXPIRED";
@@ -369,7 +423,7 @@ $( document ).ready(function() {
 
   }
 
-  //startCountdown();
-  startBlocks();
+  startCountdown();
+  //startBlocks();
 
 });
