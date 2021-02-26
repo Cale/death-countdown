@@ -13,8 +13,48 @@ $( document ).ready(function() {
   var prevsecond1 = 6;
   var prevsecond2 = 11;
 
-  function startCountdown() {
-    var deadline = new Date("Feb 19, 2041 18:13:00").getTime();
+  var firstrun = true;
+  const lifeexpectancy = 81;
+  var age = 25;
+  var deadline = new Date("Feb 19, 2041 15:14:00").getTime();
+
+  function changeBGcolor(color) {
+    $("body").animate({
+      backgroundColor: color
+    }, 250, function() {
+      $("body").animate({
+        backgroundColor: "#090F14"
+      }, 250);
+    });
+  }
+
+  function removeDays() {
+    
+  }
+
+  function startBlocks() {
+    const container = document.getElementById("grid");
+    const rows = Math.round(29585 / 172);
+    const colors = Array("#090F14", "#112442", "#794bbf", "#4C4466", "#2846a8");
+
+    function makeRows(rows, cols) {
+      container.style.setProperty('--grid-rows', rows);
+      container.style.setProperty('--grid-cols', cols);
+      for (c = 0; c < (rows * cols); c++) {
+
+        var color = colors[Math.floor(Math.random() * colors.length)];
+        let cell = document.createElement("div");
+        let box = c.toString();
+        cell.style.background = color;
+        //cell.innerText = (c + 1);
+        container.appendChild(cell).className = "grid-item box"+box;
+      };
+      $("#grid").fadeTo(2000, 1);
+      removeDays();
+    };
+
+    makeRows(rows, rows);
+
     var x = setInterval(function() {
       var now = new Date().getTime();
       var t = deadline - now;
@@ -22,7 +62,27 @@ $( document ).ready(function() {
       var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60));
       var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((t % (1000 * 60)) / 1000);
-      var miliseconds = Math.floor((t % (((1000 * 60)) / 1000)) );
+      var years = Math.floor(totaldays / 365);
+      var days = Math.floor(totaldays - (365 * years));
+
+      var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+      var vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+
+      var squares = 16;
+
+
+
+    });
+  }
+
+  function startCountdown() {
+    var x = setInterval(function() {
+      var now = new Date().getTime();
+      var t = deadline - now;
+      var totaldays = Math.floor(t / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60));
+      var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((t % (1000 * 60)) / 1000);
       var years = Math.floor(totaldays / 365);
       var days = Math.floor(totaldays - (365 * years));
 
@@ -85,13 +145,16 @@ $( document ).ready(function() {
         if (prevyear == 200) {
           prevyear = 0;
         }
-        $("#year-container").append('<div class="year-fall fall" style="color: red;">'+prevyear+'</div>');
-        $(".year-fall").animate({
-          opacity: 0,
-          top: "+=400"
-        }, 2000, function() {
-          $(this).remove();
-        });
+        if (firstrun != true) {
+          $("#year-container").append('<div class="year-fall fall">'+prevyear+'</div>');
+          $(".year-fall").animate({
+            opacity: 0,
+            top: "+=300"
+          }, 31557600000, function() {
+            $(this).remove();
+          });
+          changeBGcolor("#bf4b4b");
+        }
         prevyear = years;
         $("#years").html(years);
       } else {
@@ -103,13 +166,18 @@ $( document ).ready(function() {
         if (prevday == 400) {
           prevday = 365;
         }
-        $("#day-container").append('<div class="day-fall fall" style="color: red;">'+prevday+'</div>');
-        $(".day-fall").animate({
-          opacity: 0,
-          top: "+=400"
-        }, 2000, function() {
-          $(this).remove();
-        });
+        if (firstrun != true) {
+          $("#day-container").append('<div class="day-fall fall">'+prevday+'</div>');
+          $(".day-fall").animate({
+            opacity: 0,
+            top: "+=300"
+          }, 86400000, function() {
+            $(this).remove();
+          });
+          if (days != 364) {
+            changeBGcolor("#bf4b4b");
+          }
+        }
         prevday = days;
         $("#days").html(days);
       } else {
@@ -121,13 +189,18 @@ $( document ).ready(function() {
         if (prevhour1 == 3) {
           prevhour1 = 0;
         }
-        $("#hour1-container").append('<div class="hour1-fall fall" style="color: red;">'+prevhour1+'</div>');
-        $(".hour1-fall").animate({
-          opacity: 0,
-          top: "+=400"
-        }, 2000, function() {
-          $(this).remove();
-        });
+        if (firstrun != true) {
+          $("#hour1-container").append('<div class="hour1-fall fall">'+prevhour1+'</div>');
+          $(".hour1-fall").animate({
+            opacity: 0,
+            top: "+=300"
+          }, 36000000, function() {
+            $(this).remove();
+          });
+          if (curhour1 != 2) {
+            changeBGcolor("#bf4b4b");
+          }
+        }
         prevhour1 = curhour1;
         $("#hour1").html(hoursarr[0]);
       } else {
@@ -139,13 +212,18 @@ $( document ).ready(function() {
         if (prevhour2 == 4) {
           prevhour2 = 0;
         }
-        $("#hour2-container").append('<div class="hour2-fall fall" style="color: orange;">'+prevhour2+'</div>');
-        $(".hour2-fall").animate({
-          opacity: 0,
-          top: "+=600"
-        }, 2000, function() {
-          $(this).remove();
-        });
+        if (firstrun != true) {
+          $("#hour2-container").append('<div class="hour2-fall fall">'+prevhour2+'</div>');
+          $(".hour2-fall").animate({
+            opacity: 0,
+            top: "+=300"
+          }, 3600000, function() {
+            $(this).remove();
+          });
+          if (curhour2 != 4) {
+            changeBGcolor("#bf4b4b");
+          }
+        }
         prevhour2 = curhour2;
         $("#hour2").html(hoursarr[1]);
       } else {
@@ -157,13 +235,18 @@ $( document ).ready(function() {
         if (prevminute1 == 6) {
           prevminute1 = 0;
         }
-        $("#minute1-container").append('<div class="minute1-fall fall" style="color: red;">'+prevminute1+'</div>');
-        $(".minute1-fall").animate({
-          opacity: 0,
-          top: "+=400"
-        }, 2000, function() {
-          $(this).remove();
-        });
+        if (firstrun != true) {
+          $("#minute1-container").append('<div class="minute1-fall fall">'+prevminute1+'</div>');
+          $(".minute1-fall").animate({
+            opacity: 0,
+            top: "+=300"
+          }, 600000, function() {
+            $(this).remove();
+          });
+          if (curminute1 != 5) {
+            changeBGcolor("#bf4b4b");
+          }
+        }
         prevminute1 = curminute1;
         $("#minute1").html(minutesarr[0]);
       } else {
@@ -175,13 +258,18 @@ $( document ).ready(function() {
         if (prevminute2 == 11) {
           prevminute2 = 0;
         }
-        $("#minute2-container").append('<div class="minute2-fall fall" style="color: orange;">'+prevminute2+'</div>');
-        $(".minute2-fall").animate({
-          opacity: 0,
-          top: "+=600"
-        }, 2000, function() {
-          $(this).remove();
-        });
+        if (firstrun != true) {
+          $("#minute2-container").append('<div class="minute2-fall fall">'+prevminute2+'</div>');
+          $(".minute2-fall").animate({
+            opacity: 0,
+            top: "+=300"
+          }, 60000, function() {
+            $(this).remove();
+          });
+          if (curminute2 != 9) {
+            changeBGcolor("#bf4b4b");
+          }
+        }
         prevminute2 = curminute2;
         $("#minute2").html(minutesarr[1]);
       } else {
@@ -193,13 +281,18 @@ $( document ).ready(function() {
         if (prevsecond1 == 6) {
           prevsecond1 = 0;
         }
-        $("#second1-container").append('<div class="second1-fall fall" style="color: red;">'+prevsecond1+'</div>');
-        $(".second1-fall").animate({
-          opacity: 0,
-          top: "+=400"
-        }, 2000, function() {
-          $(this).remove();
-        });
+        if (firstrun != true) {
+          $("#second1-container").append('<div class="second1-fall fall">'+prevsecond1+'</div>');
+          $(".second1-fall").animate({
+            opacity: 0,
+            top: "+=300"
+          }, 10000, function() {
+            $(this).remove();
+          });
+          if (cursecond1 != 5) {
+            changeBGcolor("#314e7a");
+          }
+        }
         prevsecond1 = cursecond1;
         $("#second1").html(secondsarr[0]);
       } else {
@@ -211,20 +304,27 @@ $( document ).ready(function() {
         if (prevsecond2 == 11) {
           prevsecond2 = 0;
         }
-        $("#second2-container").append('<div class="second2-fall fall" style="color: orange;">'+prevsecond2+'</div>');
-        $(".second2-fall").animate({
-          opacity: 0,
-          top: "+=600"
-        }, 2000, function() {
-          $(this).remove();
-        });
+        if (firstrun != true) {
+          $("#second2-container").append('<div class="second2-fall fall">'+prevsecond2+'</div>');
+          $(".second2-fall").animate({
+            opacity: 0,
+            top: "+=300"
+          }, 2000, function() {
+            $(this).remove();
+          });
+          if (cursecond2 != 9) {
+            changeBGcolor("#112442");
+          }
+        }
         prevsecond2 = cursecond2;
         $("#second2").html(secondsarr[1]);
       } else {
         $("#second2").html(secondsarr[1]);
       }
 
-      document.getElementById("demo").innerHTML = years + "y " + days + "d " + hours + "h " + minutes + "m " + seconds + "s " + miliseconds + "ms";
+      firstrun = false;
+
+      //document.getElementById("demo").innerHTML = years + "y " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
       if (t < 0) {
           clearInterval(x);
           document.getElementById("demo").innerHTML = "EXPIRED";
@@ -233,6 +333,7 @@ $( document ).ready(function() {
 
   }
 
-  startCountdown();
+  //startCountdown();
+  startBlocks();
 
 });
