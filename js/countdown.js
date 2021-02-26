@@ -22,8 +22,6 @@ $( document ).ready(function() {
   var age = 25;
   var deadline = new Date("Feb 19, 2041 22:11:00").getTime();
 
-  function donothing() {}
-
   function changeBGcolor(color) {
     $("body").animate({
       backgroundColor: color
@@ -34,90 +32,23 @@ $( document ).ready(function() {
     });
   }
 
-  // function throbBGcolor(elem) {
-  //   var x = setInterval(function() {
-  //
-  //     //throbBGcolor(".box"+c.toString());
-  //     // if (t < 0) {
-  //     //     clearInterval(x);
-  //     //     console.log("Minute done");
-  //     // }
-  //
-  //     console.log("throbbing");
-  //     $(elem).animate({
-  //       backgroundColor: "#ffffff"
-  //     }, 500, function() {
-  //       $(elem).animate({
-  //         backgroundColor: "#090F14"
-  //       }, 500);
-  //     });
-  //
-  //   }, 1000);
-  // }
-
-
   function removeRemainingMinutes() {
-    setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+    setTimeout(function() {
 
       $(".box"+lastbox.toString()).animate({
         backgroundColor: "#0f0"
       }, 500);
-      // setTimeout(donothing, 2000)
-      // if (c != 1369) {
-      //   setTimeout(removeMinute, 60000)
-      // } else {
-      //   console.log("done");
-      // }
-
-
-
-      lastbox++;                    //  increment the counter
-      if (lastbox < 1369) {           //  if the counter < 10, call the loop function
-        removeRemainingMinutes();             //  ..  again which will trigger another
-        console.log(lastbox);
+      lastbox++;
+      if (lastbox < 1369) {
+        removeRemainingMinutes();
       } else {
         console.log("done");
       }
     }, 60000)
   }
 
-
-
-  // function removeRemainingMinutes(gone) {
-  //   console.log(minutesinaday);
-  //   console.log(gone)
-  //   console.log(minutesinaday - gone);
-  //   //var startingid = gone;
-  //
-  //   // var x = setInterval(function() {
-  //   //
-  //   //   //throbBGcolor(".box"+c.toString());
-  //   //   // if (t < 0) {
-  //   //   //     clearInterval(x);
-  //   //   //     console.log("Minute done");
-  //   //   // }
-  //   // }, 1000);
-  //
-  //   for (c = gone; c < 1369; c++) {
-  //     function removeMinute() {
-  //       $(".box"+c.toString()).animate({
-  //         backgroundColor: "#0f0"
-  //       }, 500);
-  //       setTimeout(donothing, 2000)
-  //       if (c != 1369) {
-  //         setTimeout(removeMinute, 60000)
-  //       } else {
-  //         console.log("done");
-  //       }
-  //     }
-  //     removeMinute();
-  //   }
-  //
-  // }
-
   function removeMinutesGone() {
-    var now = new Date().getTime();
-    var t = deadline - now;
+    var t = new Date().getTime();
     var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60));
     var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
 
@@ -414,7 +345,7 @@ $( document ).ready(function() {
 
       firstrun = false;
 
-      document.getElementById("demo").innerHTML = years + "y " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+      //document.getElementById("demo").innerHTML = years + "y " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
       if (t < 0) {
           clearInterval(x);
           document.getElementById("demo").innerHTML = "EXPIRED";
@@ -423,7 +354,7 @@ $( document ).ready(function() {
 
   }
 
-  startCountdown();
-  //startBlocks();
+  //startCountdown();
+  startBlocks();
 
 });
