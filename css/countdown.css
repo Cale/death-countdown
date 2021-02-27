@@ -47,17 +47,16 @@ input, button {
 
 #grid {
   display: grid;
-  grid-gap: 1px;
+  grid-gap: 0;
   grid-template-rows: repeat(var(--grid-rows), 1fr);
   grid-template-columns: repeat(var(--grid-cols), 1fr);
   opacity: 0;
 }
 
 .grid-item {
-  border: 1px solid #000;
   text-align: center;
-  width: 2.5vw;
-  height: 2.4vh;
+  width: 2.71vw;
+  height: 2.7vh;
 }
 
 /* Countdown */

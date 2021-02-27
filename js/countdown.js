@@ -21,6 +21,7 @@ $( document ).ready(function() {
   var lastbox;
   var deadline;
   var yearsleft;
+  var pace;
 
   function changeBGcolor(color) {
     $("body").animate({
@@ -32,17 +33,32 @@ $( document ).ready(function() {
     });
   }
 
+  function throbup() {
+    $(".box"+lastbox.toString()).animate({
+        backgroundColor: "#bf4b4b",
+    }, 1000, function () {
+        throbdown();
+    });
+  }
+  function throbdown() {
+    $(".box"+lastbox.toString()).animate({
+        backgroundColor: "#090f14",
+    }, 1000, function () {
+        throbup();
+    });
+  }
+
   function removeRemainingMinutes() {
     setTimeout(function() {
-
       $(".box"+lastbox.toString()).animate({
-        backgroundColor: "#0f0"
+        backgroundColor: "#090f14"
       }, 500);
       lastbox++;
       if (lastbox < 1369) {
         removeRemainingMinutes();
       } else {
         console.log("done");
+        startBlocks();
       }
     }, 60000)
   }
@@ -53,26 +69,28 @@ $( document ).ready(function() {
     var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
 
     minuteslefttoday = ((hours * 60) + minutes);
-    var minutesgonetoday = minutesinaday - minuteslefttoday;
+    var minutesgonetoday = minutesinaday - minuteslefttoday - 71;
 
     var v = $("#grid > div");
     var cur = 0;
     for(var j, x, i = minutesgonetoday; i; j = parseInt(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
       function removeMinute() {
         v.eq(cur++).animate({
-          backgroundColor: "#ffffff"
-        }, 25);
+          backgroundColor: "#090f14"
+        }, 1);
           if (cur != minutesgonetoday) {
-            setTimeout(removeMinute, 25)
+            setTimeout(removeMinute, 2)
           } else {
             lastbox = cur;
             removeRemainingMinutes();
+            throbup();
           }
       }
     removeMinute();
   }
 
   function startBlocks() {
+    $("#grid").empty();
     const container = document.getElementById("grid");
     const rows = Math.floor(minutesinaday / 38);
     const colors = Array("#112442", "#794bbf", "#4C4466", "#2846a8");
@@ -92,12 +110,11 @@ $( document ).ready(function() {
         removeMinutesGone();
       });
     };
-
     makeRows(rows, rows);
   }
 
   function startCountdown() {
-    var x = setInterval(function() {
+    pace = setInterval(function() {
       var now = new Date().getTime();
       var t = deadline - now;
       var totaldays = Math.floor(t / (1000 * 60 * 60 * 24));
@@ -346,7 +363,7 @@ $( document ).ready(function() {
       firstrun = false;
 
       if (t < 0) {
-          clearInterval(x);
+          clearInterval(pace);
           $(".container div").empty();
           $("#years").text("TOTAL EMPTINESS FOR EVER").animate({
             color: "#bf4b4b",
@@ -355,6 +372,12 @@ $( document ).ready(function() {
       }
     }, 1000);
 
+  }
+
+  function hideCountdown() {
+    clearInterval(pace);
+    $("#countdown").hide();
+    startBlocks();
   }
 
   function showForm() {
@@ -381,7 +404,10 @@ $( document ).ready(function() {
     });
   }
 
+  $("#countdown").click(function(){
+    hideCountdown();
+  });
+
   showForm();
-  //startBlocks();
 
 });
