@@ -8,6 +8,36 @@ body {
   overflow: hidden;
 }
 
+/* div {
+  border: 1px solid red;
+} */
+
+::selection { background-color: #794bbf; }
+
+#form {
+  opacity: 0;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+label {
+  display: block;
+  font-size: 4rem;
+  margin-top: 2rem;
+}
+
+label, input, button {
+}
+
+input, button {
+  border: 0;
+  border-radius: 1rem;
+  display: block;
+  font-size: 2rem;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
 /* Grid */
 
 :root {
@@ -36,10 +66,6 @@ body {
   text-align: center;
 }
 
-/* div {
-  border: 1px solid red;
-} */
-
 .container {
   display: inline-block;
   font-size: 25vh;
@@ -51,8 +77,8 @@ body {
 }
 
 .fall {
+  line-height: 0;
   position: absolute;
-  margin-top: -6rem;
 }
 
 .year-fall {

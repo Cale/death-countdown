@@ -19,8 +19,8 @@ $( document ).ready(function() {
   const minutesinaday = 1440;
   var minuteslefttoday;
   var lastbox;
-  var age = 25;
-  var deadline = new Date("Feb 19, 2041 22:11:00").getTime();
+  var deadline;
+  var yearsleft;
 
   function changeBGcolor(color) {
     $("body").animate({
@@ -170,7 +170,7 @@ $( document ).ready(function() {
           $("#year-container").append('<div class="year-fall fall">'+prevyear+'</div>');
           $(".year-fall").animate({
             opacity: 0,
-            top: "+=300"
+            marginTop: "+=300"
           }, 31557600000, function() {
             $(this).remove();
           });
@@ -191,7 +191,7 @@ $( document ).ready(function() {
           $("#day-container").append('<div class="day-fall fall">'+prevday+'</div>');
           $(".day-fall").animate({
             opacity: 0,
-            top: "+=300"
+            marginTop: "+=300"
           }, 86400000, function() {
             $(this).remove();
           });
@@ -214,7 +214,7 @@ $( document ).ready(function() {
           $("#hour1-container").append('<div class="hour1-fall fall">'+prevhour1+'</div>');
           $(".hour1-fall").animate({
             opacity: 0,
-            top: "+=300"
+            marginTop: "+=300"
           }, 36000000, function() {
             $(this).remove();
           });
@@ -237,7 +237,7 @@ $( document ).ready(function() {
           $("#hour2-container").append('<div class="hour2-fall fall">'+prevhour2+'</div>');
           $(".hour2-fall").animate({
             opacity: 0,
-            top: "+=300"
+            marginTop: "+=300"
           }, 3600000, function() {
             $(this).remove();
           });
@@ -260,7 +260,7 @@ $( document ).ready(function() {
           $("#minute1-container").append('<div class="minute1-fall fall">'+prevminute1+'</div>');
           $(".minute1-fall").animate({
             opacity: 0,
-            top: "+=300"
+            marginTop: "+=300"
           }, 600000, function() {
             $(this).remove();
           });
@@ -283,7 +283,7 @@ $( document ).ready(function() {
           $("#minute2-container").append('<div class="minute2-fall fall">'+prevminute2+'</div>');
           $(".minute2-fall").animate({
             opacity: 0,
-            top: "+=300"
+            marginTop: "+=300"
           }, 60000, function() {
             $(this).remove();
           });
@@ -306,7 +306,7 @@ $( document ).ready(function() {
           $("#second1-container").append('<div class="second1-fall fall">'+prevsecond1+'</div>');
           $(".second1-fall").animate({
             opacity: 0,
-            top: "+=300"
+            marginTop: "+=300"
           }, 10000, function() {
             $(this).remove();
           });
@@ -329,7 +329,7 @@ $( document ).ready(function() {
           $("#second2-container").append('<div class="second2-fall fall">'+prevsecond2+'</div>');
           $(".second2-fall").animate({
             opacity: 0,
-            top: "+=300"
+            marginTop: "+=300"
           }, 2000, function() {
             $(this).remove();
           });
@@ -345,16 +345,43 @@ $( document ).ready(function() {
 
       firstrun = false;
 
-      //document.getElementById("demo").innerHTML = years + "y " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
       if (t < 0) {
           clearInterval(x);
-          document.getElementById("demo").innerHTML = "EXPIRED";
+          $(".container div").empty();
+          $("#years").text("TOTAL EMPTINESS FOR EVER").animate({
+            color: "#bf4b4b",
+            opacity: .5
+          }, 2000);;
       }
     }, 1000);
 
   }
 
-  //startCountdown();
-  startBlocks();
+  function showForm() {
+    let age;
+    $("#form").fadeTo(2000, 1);
+    $("button").click(function(e) {
+      e.preventDefault();
+      let regex = /^[0-9]+$/;
+      age = $("#age").val();
+      if (age.match(regex) == null) {
+        alert("Please enter a number.");
+      } else {
+        age = Number(age);
+        if (age > 81) {
+          age = 81;
+        }
+        yearsleft = lifeexpectancy - age;
+        var d = new Date();
+        var year = d.getFullYear();
+        deadline = new Date(year + yearsleft, 2, 4, 12, 15, 47).getTime();
+        $("#form").hide();
+        startCountdown();
+      }
+    });
+  }
+
+  showForm();
+  //startBlocks();
 
 });
