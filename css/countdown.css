@@ -1,5 +1,5 @@
 body {
-  background-color: #090F14;
+  background-color: #4c4466;
   color: #2846A8;
   font-family: 'Unica One', cursive;;
   font-size: 0;
@@ -21,21 +21,29 @@ body {
 }
 
 label {
+  color: #794bbf;
   display: block;
   font-size: 4rem;
   margin-top: 2rem;
 }
 
-label, input, button {
-}
-
 input, button {
   border: 0;
   border-radius: 1rem;
-  display: block;
+  display: inline-block;
   font-size: 2rem;
   margin: 2rem auto;
   padding: 1.5rem;
+}
+
+button {
+  background-color: #ccc;
+  margin-left: 1rem;
+}
+
+button:hover {
+  background-color: #fff;
+  cursor: pointer;
 }
 
 /* Grid */

@@ -398,7 +398,8 @@ $( document ).ready(function() {
         var d = new Date();
         var year = d.getFullYear();
         deadline = new Date(year + yearsleft, 2, 4, 12, 15, 47).getTime();
-        $("#form").hide();
+        $("#form").fadeOut();
+        $("body").css("background-color", "#090F14");
         startCountdown();
       }
     });
